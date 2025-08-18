@@ -38,7 +38,13 @@ function atualizarTabuleiro()
 function onClickPecinha(e) {
     const ipeca = Number(e.target.dataset.posicaoX);
     const jpeca = Number(e.target.dataset.posicaoY);
-    mover(ipeca, jpeca, aux[0], aux[1]);
+    // PISTA 1: Ver se o clique está sendo detectado corretamente.
+    console.log(`--- Clique detectado na posição: (${ipeca}, ${jpeca}) ---`);
+
+    // PISTA 2: Ver exatamente com quais argumentos a função mover está sendo chamada.
+    console.log(`Chamando mover com: ORIGEM (${aux[0]}, ${aux[1]}) e DESTINO (${ipeca}, ${jpeca})`);
+    //ultimo peça prox vazio (dentro das condições: dist) --> troca e remove o do meio
+    mover(aux[0],  aux[1], ipeca ,jpeca);
     aux[0] = ipeca;
     aux[1] = jpeca;
 

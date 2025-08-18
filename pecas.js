@@ -15,6 +15,9 @@ function trocar(iPecinhaA, jPecinhaA, iPecinhaB, jPecinhaB, direcao, sentido)
     if (tabuleiro[iPecinhaA][jPecinhaA] === '') return;
     if (tabuleiro[iPecinhaB][jPecinhaB] !== '') return;
 
+    console.log(`--- entrou em trocar  ---`);
+
+
     //onde estava vazio fica a peça; e onde estava a peça fica vazio
     tabuleiro[iPecinhaB][jPecinhaB] = tabuleiro[iPecinhaA][jPecinhaA];
     tabuleiro[iPecinhaA][jPecinhaA] = 'v';
@@ -57,6 +60,7 @@ export function mover(iPecinhaA, jPecinhaA, iPecinhaB, jPecinhaB) {
     const pecinhaB = tabuleiro[iPecinhaB][jPecinhaB];   
 
     //validações 
+    console.log(`--- mover etapa 1---`);
 
     //determina a direção, horizontal ou vertical
     const direcao = decideDirecao(iPecinhaA, jPecinhaA, iPecinhaB, jPecinhaB);
@@ -66,9 +70,9 @@ export function mover(iPecinhaA, jPecinhaA, iPecinhaB, jPecinhaB) {
     //calcula o sentido do movimento (esquerda, direita, baixo, cima)
     const sentido = decideSentido(iPecinhaA, jPecinhaA, iPecinhaB, jPecinhaB, direcao);
     // verifica se a distancia entre as duas posições é 2
-    const distanciaValida = distanciaValida(iPecinhaA, jPecinhaA, iPecinhaB, jPecinhaB, direcao);
+    const distanciaValidar = distanciaValida(iPecinhaA, jPecinhaA, iPecinhaB, jPecinhaB, direcao);
     //distancia invalida implica movimento invalido 
-    if(!distanciaValida)
+    if(!distanciaValidar)
         return;
     // verifica se tem uma peça entre as duas posições
     const meioValida = validaMeio(iPecinhaA, jPecinhaA, direcao, sentido);
