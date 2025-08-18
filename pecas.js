@@ -9,13 +9,39 @@ const tabuleiro = [
   ['', '', 'p', 'p', 'p', '', ''],
 ];
 
-function trocar(origem, destino) {
+function trocar(iPecinhaA, jPecinhaA, iPecinhaB, jPecinhaB, direcao, sentido) 
+{
     //não podem ser posições nulas
-    if (tabuleiro[origem] === '') return;
-    if (tabuleiro[destino] !== '') return;
+    if (tabuleiro[iPecinhaA][jPecinhaA] === '') return;
+    if (tabuleiro[iPecinhaB][jPecinhaB] !== '') return;
     //onde estava vazio fica a peça; e onde estava a peça fica vazio
-    tabuleiro[destino] = tabuleiro[origem];
-    tabuleiro[origem] = 'v';
+    tabuleiro[iPecinhaB][jPecinhaB] = tabuleiro[iPecinhaA][jPecinhaA];
+    tabuleiro[iPecinhaA][jPecinhaA] = 'v';
+
+    //remove a peça do meio
+    if(direcao === "horizontal")
+    {
+        if(sentido === "esquerda")
+        {
+            tabuleiro[iPecinhaA][jPecinhaA-1] = '';
+        }
+        else
+        {
+            tabuleiro[iPecinhaA][jPecinhaA+1] = '';
+        }    
+    }
+    //vertical
+    else
+    {
+        if(sentido === "baixo")
+        {
+            tabuleiro[iPecinhaA- 1][jPecinhaA] = '';
+        }
+        else
+        {
+            tabuleiro[iPecinhaA- 1][jPecinhaA] = '';
+        }   
+    }    
 }
 
 export function mover(iPecinhaA, jPecinhaA, iPecinhaB, jPecinhaB) {
@@ -31,14 +57,14 @@ export function mover(iPecinhaA, jPecinhaA, iPecinhaB, jPecinhaB) {
     if(direcao === "invalido")
         return;
     //calcula o sentido do movimento (esquerda, direita, baixo, cima)
-    const sentido = deciodeSentido(iPecinhaA, jPecinhaA, iPecinhaB, jPecinhaB, direcao);
+    const sentido = decideSentido(iPecinhaA, jPecinhaA, iPecinhaB, jPecinhaB, direcao);
     // verifica se a distancia entre as duas posições é 2
     const distanciaValida = distanciaValida(iPecinhaA, jPecinhaA, iPecinhaB, jPecinhaB, direcao);
     //distancia invalida implica movimento invalido 
     if(!distanciaValida)
         return;
     // verifica se tem uma peça entre as duas posições
-    const meioValida = validaMeio(iPecinhaA, jPecinhaA, iPecinhaB, jPecinhaB, direcao, sentido);
+    const meioValida = validaMeio(iPecinhaA, jPecinhaA, iPecinhaB, jPecinhaB);
     //se não tiver, movimento é invalido
      if(!meioValida)
         return;
@@ -46,7 +72,7 @@ export function mover(iPecinhaA, jPecinhaA, iPecinhaB, jPecinhaB) {
     
     if (pecinhaA === 'p') {
         if (pecinhaB === 'v'){
-            trocar(iPecinhaA, jPecinhaA, iPecinhaB, jPecinhaB);
+            trocar(iPecinhaA, jPecinhaA, iPecinhaB, jPecinhaB, direcao, sentido);
         }
     }
 }
@@ -123,7 +149,7 @@ function validaMeio(iPecinhaA, jPecinhaA, direcao, sentido)
     }    
 }
 
-function deciodeSentido(iPecinhaA, jPecinhaA, iPecinhaB, jPecinhaB, direcao )
+function decideSentido(iPecinhaA, jPecinhaA, iPecinhaB, jPecinhaB, direcao )
 {
     // se horizontal
     if(direcao === "horizontal")

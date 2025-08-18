@@ -12,41 +12,47 @@ h1{
     background-color: lightseagreen;
     color: darkblue;
 }
+
 #jogo {
     height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: top;
 }
+
 
 .tabuleiro {
-    --cell-side:175px;
-
-    box-sizing: content-box;
-
-    background-color: lightgreen;
+    background-color: saddlebrown;
     display: grid;
+    /*  divide em 12 colunas de tamanho igual */
     grid-template-columns: repeat(7, 1fr);
-    width: calc(7 * var(--cell-side));
-    min-height: var(--cell-side);
-    padding: 10px;
+    /* divide em 12 linhas de tamanho igual  */
+    grid-template-rows: repeat(7, 1fr);
+    /* largura */
+    width: 100%;
+    height: 95%;
 
 }
+
 
 .pecinha {
-    width: 100%;
+    /* largura 40% */
+    width: 40%;
     aspect-ratio: 1;
     border-radius: 50%;
-    border: solid black 2px;
+    border: solid black 0.5px;
 
 }
 
-.pecinha[data-cor='b'] {
-    background: radial-gradient(rgb(192, 192, 192), white);
+.pecinha[data-tipo='v'] {
+    background: radial-gradient(rgb(0, 34, 78), black);
     
 }
 
-.pecinha[data-cor='p'] {
-    background: radial-gradient(rgb(0, 34, 78), black);
+.pecinha[data-tipo='p'] {
+    background: radial-gradient(rgb(192, 192, 192),white);
 }
 
-.pecinha[data-cor=''] {
+.pecinha[data-tipo=''] {
     border: none;
 }

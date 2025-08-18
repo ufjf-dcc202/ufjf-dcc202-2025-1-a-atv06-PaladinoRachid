@@ -37,7 +37,7 @@ function atualizarTabuleiro()
 //mudar aqui
 function onClickPecinha(e) {
     const ipeca = Number(e.target.dataset.posicaoX);
-    const jpeca = Number(e.target.dataset.posicaoX);
+    const jpeca = Number(e.target.dataset.posicaoY);
     mover(ipeca, jpeca, aux[0], aux[1]);
     aux[0] = ipeca;
     aux[1] = jpeca;
