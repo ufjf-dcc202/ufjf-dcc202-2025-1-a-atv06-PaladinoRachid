@@ -14,20 +14,27 @@ function trocar(iPecinhaA, jPecinhaA, iPecinhaB, jPecinhaB, direcao, sentido)
     //não podem ser posições nulas
     if (tabuleiro[iPecinhaA][jPecinhaA] === '') return;
     if (tabuleiro[iPecinhaB][jPecinhaB] !== '') return;
+
     //onde estava vazio fica a peça; e onde estava a peça fica vazio
     tabuleiro[iPecinhaB][jPecinhaB] = tabuleiro[iPecinhaA][jPecinhaA];
     tabuleiro[iPecinhaA][jPecinhaA] = 'v';
 
     //remove a peça do meio
+    removeMeio(iPecinhaA,jPecinhaA,direcao, sentido);
+   
+}
+
+function removeMeio(iPecinhaA, jPecinhaA, direcao, sentido)
+{
     if(direcao === "horizontal")
     {
         if(sentido === "esquerda")
         {
-            tabuleiro[iPecinhaA][jPecinhaA-1] = '';
+            tabuleiro[iPecinhaA][jPecinhaA-1] = 'v';
         }
         else
         {
-            tabuleiro[iPecinhaA][jPecinhaA+1] = '';
+            tabuleiro[iPecinhaA][jPecinhaA+1] = 'v';
         }    
     }
     //vertical
@@ -35,11 +42,11 @@ function trocar(iPecinhaA, jPecinhaA, iPecinhaB, jPecinhaB, direcao, sentido)
     {
         if(sentido === "baixo")
         {
-            tabuleiro[iPecinhaA- 1][jPecinhaA] = '';
+            tabuleiro[iPecinhaA- 1][jPecinhaA] = 'v';
         }
         else
         {
-            tabuleiro[iPecinhaA- 1][jPecinhaA] = '';
+            tabuleiro[iPecinhaA + 1][jPecinhaA] = 'v';
         }   
     }    
 }
@@ -64,7 +71,7 @@ export function mover(iPecinhaA, jPecinhaA, iPecinhaB, jPecinhaB) {
     if(!distanciaValida)
         return;
     // verifica se tem uma peça entre as duas posições
-    const meioValida = validaMeio(iPecinhaA, jPecinhaA, iPecinhaB, jPecinhaB);
+    const meioValida = validaMeio(iPecinhaA, jPecinhaA, direcao, sentido);
     //se não tiver, movimento é invalido
      if(!meioValida)
         return;
@@ -169,9 +176,6 @@ function decideSentido(iPecinhaA, jPecinhaA, iPecinhaB, jPecinhaB, direcao )
             return "cima";
     }
 }
-
-
-
 
 export function getTabuleiro() {
     return structuredClone(tabuleiro);
