@@ -1,51 +1,68 @@
-import { getTabuleiro, mover } from "./discos.js";
+import { getTabuleiro, mover } from "./pecas.js";
 
 const jogo = document.querySelector('#jogo');
+
+//variavel que guardará as posições da ultima "peça" clicada, começa com um nulo
+const aux = [0,0];
 
 
 atualizarTabuleiro();
 
-function atualizarTabuleiro() {
-
+function atualizarTabuleiro() 
+{
     const tabuleiroAntigo = document.querySelector('.tabuleiro');
 
-    if (tabuleiroAntigo) {
+    if (tabuleiroAntigo) 
+    {
         jogo.removeChild(tabuleiroAntigo);
     }
 
     const tabuleiroModel = getTabuleiro();
 
     const eTabuleiro = criarTabuleiro();    
-    
-    for (let i = 0; i < tabuleiroModel.length; i++) {
-        const pecinha = criarPecinha(tabuleiroModel[i], i + 1);
-        eTabuleiro.append(pecinha);
-        pecinha.addEventListener('click', onClickPecinha);
+    //preciso mudar aqui
+    for (let i = 0; i < tabuleiroModel.length; i++)
+    {
+        for(let j = 0; j < tabuleiroModel.length; j++)
+        {
+            const pecinha = criarPecinha(tabuleiroModel[i][j], i + 1, j + 1);
+            eTabuleiro.append(pecinha);
+            pecinha.addEventListener('click', onClickPecinha);
+        }
     }
     
     jogo.append(eTabuleiro);
 }
 
+//mudar aqui
 function onClickPecinha(e) {
-    const peca = Number(e.target.dataset.posicao);
-    mover(peca);
+    const ipeca = Number(e.target.dataset.posicaoX);
+    const jpeca = Number(e.target.dataset.posicaoX);
+    mover(ipeca, jpeca, aux[0], aux[1]);
+    aux[0] = ipeca;
+    aux[1] = jpeca;
+
     atualizarTabuleiro();
 }
 
 
-function criarTabuleiro() {
+function criarTabuleiro() 
+{
     const tabuleiro = document.createElement('div');
     tabuleiro.classList.add('tabuleiro');
 
     return tabuleiro;
 }
 
-function criarPecinha(cor, posicao) {
+function criarPecinha(tipo, posicaoX, posicaoY) 
+{
     const novaPecinha = document.createElement('div');
     novaPecinha.classList.add('pecinha');
-    novaPecinha.dataset.cor = cor;
-    novaPecinha.dataset.posicao = posicao - 1;
-    novaPecinha.style.gridColumn = posicao;
+    novaPecinha.dataset.tipo = tipo;
+    novaPecinha.dataset.posicaoX = posicaoX - 1;
+    novaPecinha.dataset.posicaoY = posicaoY - 1;
+    novaPecinha.style.gridColumn = posicaoX;
+    novaPecinha.style.gridRow = posicaoY;
 
     return novaPecinha;
 }
