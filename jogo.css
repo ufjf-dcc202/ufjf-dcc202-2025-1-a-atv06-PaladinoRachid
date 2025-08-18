@@ -1,0 +1,52 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+html, body {
+    height: 100%;
+}
+
+h1{
+    text-align: center;
+    background-color: lightseagreen;
+    color: darkblue;
+}
+#jogo {
+    height: 100%;
+}
+
+.tabuleiro {
+    --cell-side:175px;
+
+    box-sizing: content-box;
+
+    background-color: lightgreen;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    width: calc(7 * var(--cell-side));
+    min-height: var(--cell-side);
+    padding: 10px;
+
+}
+
+.pecinha {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: solid black 2px;
+
+}
+
+.pecinha[data-cor='b'] {
+    background: radial-gradient(rgb(192, 192, 192), white);
+    
+}
+
+.pecinha[data-cor='p'] {
+    background: radial-gradient(rgb(0, 34, 78), black);
+}
+
+.pecinha[data-cor=''] {
+    border: none;
+}
