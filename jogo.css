@@ -24,16 +24,15 @@ h1{
 .tabuleiro {
     background-color: saddlebrown;
     display: grid;
-    /*  divide em 12 colunas de tamanho igual */
+    /*  divide em 7 colunas de tamanho igual */
     grid-template-columns: repeat(7, 1fr);
-    /* divide em 12 linhas de tamanho igual  */
+    /* divide em 7 linhas de tamanho igual  */
     grid-template-rows: repeat(7, 1fr);
     /* largura */
     width: 100%;
     height: 95%;
 
 }
-
 
 .pecinha {
     /* largura 40% */
@@ -55,4 +54,18 @@ h1{
 
 .pecinha[data-tipo=''] {
     border: none;
+}
+
+#vitoria
+{
+    display: flex;
+    /*centraliza o texto */
+    justify-content: center;
+    align-items: center;    
+    text-align: center;
+    justify-content: center;
+    background-color: aqua;
+    /*grande*/
+    font-size: 150px;
+    color: darkcyan;
 }

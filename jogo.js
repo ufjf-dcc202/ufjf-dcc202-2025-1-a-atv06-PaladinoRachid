@@ -1,4 +1,4 @@
-import { getTabuleiro, mover } from "./pecas.js";
+import { getTabuleiro, mover, condicaoVitoria} from "./pecas.js";
 
 const jogo = document.querySelector('#jogo');
 
@@ -10,6 +10,7 @@ atualizarTabuleiro();
 
 function atualizarTabuleiro() 
 {
+   
     const tabuleiroAntigo = document.querySelector('.tabuleiro');
 
     if (tabuleiroAntigo) 
@@ -17,8 +18,15 @@ function atualizarTabuleiro()
         jogo.removeChild(tabuleiroAntigo);
     }
 
-    const tabuleiroModel = getTabuleiro();
+    if(condicaoVitoria())
+    {
+        const telaVitoria = criarTelaVitoria();
+        jogo.append(telaVitoria);
+        return;
+    }
 
+    const tabuleiroModel = getTabuleiro();
+        
     const eTabuleiro = criarTabuleiro();    
     //preciso mudar aqui
     for (let i = 0; i < tabuleiroModel.length; i++)
@@ -38,11 +46,7 @@ function atualizarTabuleiro()
 function onClickPecinha(e) {
     const ipeca = Number(e.target.dataset.posicaoX);
     const jpeca = Number(e.target.dataset.posicaoY);
-    // PISTA 1: Ver se o clique está sendo detectado corretamente.
-    console.log(`--- Clique detectado na posição: (${ipeca}, ${jpeca}) ---`);
 
-    // PISTA 2: Ver exatamente com quais argumentos a função mover está sendo chamada.
-    console.log(`Chamando mover com: ORIGEM (${aux[0]}, ${aux[1]}) e DESTINO (${ipeca}, ${jpeca})`);
     //ultimo peça prox vazio (dentro das condições: dist) --> troca e remove o do meio
     mover(aux[0],  aux[1], ipeca ,jpeca);
     aux[0] = ipeca;
@@ -71,4 +75,12 @@ function criarPecinha(tipo, posicaoX, posicaoY)
     novaPecinha.style.gridRow = posicaoY;
 
     return novaPecinha;
+}
+
+function criarTelaVitoria()
+{
+    const telaVitoria = document.createElement("div");
+    telaVitoria.setAttribute("id", "vitoria");
+    telaVitoria.textContent = "Parabéns, você venceu!";
+    return telaVitoria;
 }

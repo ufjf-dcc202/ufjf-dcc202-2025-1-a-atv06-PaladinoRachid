@@ -11,11 +11,6 @@ const tabuleiro = [
 
 function trocar(iPecinhaA, jPecinhaA, iPecinhaB, jPecinhaB, direcao, sentido) 
 {
-    //não podem ser posições nula
-    console.log(`--- entrou em trocar  1 ---`); 
-
-    console.log(`--- entrou em trocar  2 ---`);
-
 
     //onde estava vazio fica a peça; e onde estava a peça fica vazio
     tabuleiro[iPecinhaB][jPecinhaB] = tabuleiro[iPecinhaA][jPecinhaA];
@@ -59,14 +54,14 @@ export function mover(iPecinhaA, jPecinhaA, iPecinhaB, jPecinhaB) {
     const pecinhaB = tabuleiro[iPecinhaB][jPecinhaB];   
 
     //validações 
-    console.log(`--- mover etapa 1---`);
+
 
     //determina a direção, horizontal ou vertical
     const direcao = decideDirecao(iPecinhaA, jPecinhaA, iPecinhaB, jPecinhaB);
     // erro no calculo da direcao implica movimento invalido
     if(direcao === "invalido")
         return;
-     console.log(`--- mover etapa 2---`);
+
     //calcula o sentido do movimento (esquerda, direita, baixo, cima)
     const sentido = decideSentido(iPecinhaA, jPecinhaA, iPecinhaB, jPecinhaB, direcao);
     // verifica se a distancia entre as duas posições é 2
@@ -74,17 +69,15 @@ export function mover(iPecinhaA, jPecinhaA, iPecinhaB, jPecinhaB) {
     //distancia invalida implica movimento invalido 
     if(!distanciaValidar)
         return;
-     console.log(`--- mover etapa 3---`);
+
     // verifica se tem uma peça entre as duas posições
     const meioValida = validaMeio(iPecinhaA, jPecinhaA, direcao, sentido);
     //se não tiver, movimento é invalido
      if(!meioValida)
         return;
-     console.log(`--- mover etapa 4---`);
     
     if (pecinhaA === 'p') {
         if (pecinhaB === 'v'){
-             console.log(`--- mover etapa 5---`);
             trocar(iPecinhaA, jPecinhaA, iPecinhaB, jPecinhaB, direcao, sentido);
         }
     }
@@ -186,3 +179,30 @@ function decideSentido(iPecinhaA, jPecinhaA, iPecinhaB, jPecinhaB, direcao )
 export function getTabuleiro() {
     return structuredClone(tabuleiro);
 }
+
+// condicao de vitoria: resta apenas uma peça no centro do tabuleiro
+export function condicaoVitoria()
+{
+    for( let i = 0; i < tabuleiro.length; i++)
+        for(let j = 0; j <tabuleiro.length; j++)
+        {
+            if(tabuleiro[i][j] === "p" && (i !=  3 || j != 3))
+                return false;
+        }
+    return true;
+}
+
+// condicao de vitoria flexivel: resta apenas uma peça em qualquer parte do tabuleiro
+/*
+export function condicaoVitoria()
+{
+    let cont = 0;
+    for( let i = 0; i < tabuleiro.length; i++)
+        for(let j = 0; j <tabuleiro.length; j++)
+        {
+            if(tabuleiro[i][j] === "p")
+                cont++;
+        }
+    return cont === 1;
+}
+*/
